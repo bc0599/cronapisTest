@@ -15,6 +15,7 @@ import { SocialUser } from "angularx-social-login";
 export class RegisterPage implements OnInit {
   user: SocialUser;
   loggedIn: boolean;
+  confirmUser:any = [];
 
   registerForm: FormGroup= new FormGroup({
     
@@ -27,59 +28,45 @@ export class RegisterPage implements OnInit {
 
   })
 
-  constructor(private alertC: AlertController, private router:Router, private UserServiceService: UserServiceService, private authService: SocialAuthService) { }
+  constructor(public alertController: AlertController, private router:Router, private UserServiceService: UserServiceService, private authService: SocialAuthService) { }
 
   ngOnInit() {
 
   }
 
-  signInWithGoogle(): void {
-
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-      console.log(this.user)
-      
-      this.registerForm.setValue({
-        name:this.user.firstName,
-        lastname:this.user.lastName,
-        email: this.user.email,
-        phone: this.user.id,
-        password: this.user.id,
-        cpass: this.user.id
-      })
-
-          this.UserServiceService.register(JSON.stringify(this.registerForm.value))
-          .subscribe(
-            data=> {console.log(data); this.router.navigate(['/login'])},
-            error=> console.log(error)
-  )
-
-
-  })
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    
-  }
- 
-  signOut(): void {
-    this.authService.signOut();
-  }
-
   register(){
     if(!this.registerForm.valid || (this.registerForm.controls.password.value != this.registerForm.controls.cpass.value)){
-
+      this.invalidFormAlert();
       console.log('invalid form'); return;
+      
 
     }
+    for (const field in this.registerForm.controls) { // 'field' is a string
+      this.confirmUser.push(this.registerForm.controls[field].value);
+      console.log(this.confirmUser)
+    }
 
+    this.UserServiceService.getUser(this.confirmUser[3]).subscribe((res)=>{
+      console.log(this.confirmUser[3])
+      console.log(res)
 
-      
-        this.UserServiceService.register(JSON.stringify(this.registerForm.value))
-        .subscribe(
-          data=> {console.log(data); this.router.navigate(['/login'])},
-          error=> console.log(error)
-    )
+    if(res==null){
 
+      console.log('no existe')
+      this.UserServiceService.register(JSON.stringify(this.registerForm.value))
+      .subscribe(
+        data=> {console.log(data); this.router.navigate(['/login'])},
+        error=> console.log(error)
+        )
+
+    } else{
+      console.log(res)
+      console.log('existe')
+      this.presentAlert();
+      this.router.navigate(['/login'])
+    }
+        
+        })
 
   }
 
@@ -89,7 +76,27 @@ export class RegisterPage implements OnInit {
 
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Error',
+      subHeader: 'E-mail already in use.',
+      message: 'Looks like this email is already in use .',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 
+async invalidFormAlert() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Invalid Form',
+    message: 'Looks like you entered some invalid information.',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
 }
 

@@ -25,33 +25,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      
-      if(this.loggedIn==true){
-        console.log('esta logeado')
-
-        this.loginForm.setValue({
-          phone:this.user.id,
-          password:this.user.id
-        })
-
-        this.UserServiceService.login(JSON.stringify(this.loginForm.value)).subscribe(
-          data=>{ console.log(data);
-            this.router.navigate(['/home'])
-          },
-          error=>{console.error(error)
-            
-          }
-        )
-      }
-
-    })
-  }
-
-  signInWithGoogle11(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    console.log('me ejecuto')
+    
   }
  
   signOut(): void {
@@ -69,6 +43,7 @@ export class LoginPage implements OnInit {
     this.UserServiceService.login(JSON.stringify(this.loginForm.value)).subscribe(
       data=>{ console.log(data);
         console.log('logged')
+        this.loginAlert();
       },
       error=>{console.error(error)
         this.showAlert1();
@@ -96,5 +71,16 @@ export class LoginPage implements OnInit {
   }).then(res=> res.present());
   }
 
-}
+  async loginAlert() {
+    const alert = await this.alertC.create({
+      cssClass: 'my-custom-class',
+      header: 'Welcome!',
+      message: 'Login sucessfull.',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
+  }
+
 

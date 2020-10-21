@@ -8,7 +8,7 @@ var passport=require('passport')
 
 // Get single route
 userRoute.route('/get-route/:email').get((req, res,next) => {
-  User.findOne( {'users.email':req.params.id},
+  User.findOne( {'email':req.params.email},
     function(err, data) {
       if (err) {
         return next(err)
