@@ -3,12 +3,13 @@ const express = require('express');
 const app = express();
 const userRoute = express.Router();
 var User= require('../models/users')
-var passport=require('passport')
+var passport=require('passport');
+const { json } = require('body-parser');
 
 
 // Get single route
-userRoute.route('/get-route/:email').get((req, res,next) => {
-  User.findOne( {'email':req.params.email},
+userRoute.route('/get-route/:phone').get((req, res,next) => {
+  User.findOne( {'phone':req.params.phone},
     function(err, data) {
       if (err) {
         return next(err)
@@ -63,7 +64,7 @@ userRoute.get('/logout', isValidUser, function(req,res,next){
 
   req.logout();
   return res.status(200).json({message: 'Logout success'});
-})
+});
 
 
 function isValidUser(req,res,next){

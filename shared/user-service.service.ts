@@ -15,11 +15,11 @@ export class UserServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(email): Observable<User[]> {
-    return this.http.get<User[]>('http://localhost:3000/api/get-route/'+ email, this.httpOptions)
+  getUser(phone): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:3000/api/get-route/'+ phone, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`User fetched: ${email}`)),
-        catchError(this.handleError<User[]>(`Get User email=${email}`))
+        tap(_ => console.log(`User fetched: ${phone}`)),
+        catchError(this.handleError<User[]>(`Get User phone=${phone}`))
       );
   }
 

@@ -46,8 +46,8 @@ export class RegisterPage implements OnInit {
       console.log(this.confirmUser)
     }
 
-    this.UserServiceService.getUser(this.confirmUser[3]).subscribe((res)=>{
-      console.log(this.confirmUser[3])
+    this.UserServiceService.getUser(this.confirmUser[2]).subscribe((res)=>{
+      console.log(this.confirmUser[2])
       console.log(res)
 
     if(res==null){
@@ -80,8 +80,8 @@ export class RegisterPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Error',
-      subHeader: 'E-mail already in use.',
-      message: 'Looks like this email is already in use .',
+      subHeader: 'Phone number already in use.',
+      message: 'Looks like this phone number is already in use .',
       buttons: ['OK']
     });
 

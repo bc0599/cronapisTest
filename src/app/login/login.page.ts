@@ -24,8 +24,7 @@ export class LoginPage implements OnInit {
   constructor(private alertC: AlertController, private router: Router, private UserServiceService: UserServiceService, private authService: SocialAuthService) { }
 
   ngOnInit() {
-    
-    
+  
   }
  
   signOut(): void {
@@ -41,10 +40,14 @@ export class LoginPage implements OnInit {
     }
     
     this.UserServiceService.login(JSON.stringify(this.loginForm.value)).subscribe(
+
       data=>{ console.log(data);
         console.log('logged')
         this.loginAlert();
+        localStorage.setItem('key', JSON.stringify(this.loginForm.value));
+        this.router.navigate(['/home']);
       },
+
       error=>{console.error(error)
         this.showAlert1();
       }
@@ -81,6 +84,8 @@ export class LoginPage implements OnInit {
   
     await alert.present();
   }
+
+  
   }
 
 
