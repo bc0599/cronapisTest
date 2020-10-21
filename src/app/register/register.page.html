@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title align="center">
+      <img height="150" src='../../assets/people-removebg-preview.png'/>
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="ion-margin-top ion-justify-content-center">
+      <ion-col align-self-center size="8">
+  
+  <ion-card>
+      <ion-card-content>
+
+  <form [formGroup]="registerForm">
+
+    <ion-item lines="full" class="ion-margin-bottom">
+      <ion-label position="floating">First Name</ion-label>
+      <ion-input formControlName="name" type="name" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full" class="ion-margin-bottom">
+      <ion-label position="floating">Last Name</ion-label>
+      <ion-input formControlName="lastname" type="lastname" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full" class="ion-margin-bottom">
+      <ion-label position="floating">Phone</ion-label>
+      <ion-input formControlName="phone" type="phone" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input  formControlName="email" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full" class="ion-margin-bottom">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input  formControlName="password" type="password" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full" class="ion-margin-bottom">
+      <ion-label position="floating"> Confirm Password</ion-label>
+      <ion-input  formControlName="cpass" type="password" required></ion-input>
+    </ion-item>
+    
+
+  </form>
+
+  </ion-card-content>
+  </ion-card>
+  
+  </ion-col>
+
+      <ion-col size="8">
+        <ion-button (click)="register();" type="submit" color="secondary" expand="block">Sign Up</ion-button>
+        <ion-button  (click)= "signInWithGoogle();" type="submit" color="tertiary" expand="block">Sign Up With Google</ion-button>
+        <ion-button  (click)= "backToLogin();" type="submit" color="tertiary" expand="block">Login</ion-button>
+
+      </ion-col>
+    </ion-row>
+
+    </ion-content>
+
+
